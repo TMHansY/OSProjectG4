@@ -15,22 +15,17 @@ public class scheduleAlgo {
 
 		fcfs(schedule); //algorithm call
 		wait = waiting(schedule); //waiting time for fcfs
-		DisplayFCFS(); //printing FCFS output
+		System.out.println("FCFS Algorithm Output:");
+		DisplayAlgo(wait,schedule); //printing FCFS output
 		
 		prioritySched(schedule); //algorithm call
 		wait = waiting(schedule); //waiting time for ps
-		DisplayPS(); //printing PriorityScheduling output
+		System.out.println("Priority Scheduling Output:");
+		DisplayAlgo(wait,schedule); //printing PriorityScheduling output
 		
-		for(int i = 0; i < schedule.length; i++) {
-			System.out.print("Course Code: " + schedule[i][0] + " ");
-			System.out.print("Duration: " + schedule[i][1] + " ");
-			System.out.print("Priority: " + schedule[i][2] + " ");
-			System.out.print("Arrival Time: " + schedule[i][3]);
-			System.out.println();
-		}
-		System.out.printf("Total average waiting time is: %.2f" , wait);
 		
 	}
+	
 	private static double waiting(int[][] schedule) {
 		// average waiting time calculation
 		double total = 0.0;
@@ -69,13 +64,14 @@ public class scheduleAlgo {
 			}
 		}
 	}
-	private static void DisplayFCFS() {
-		// TODO Auto-generated method stub
-		
-	}	
-	private static void DisplayPS() {
-		// TODO Auto-generated method stub
-		
+	private static void DisplayAlgo(double wait, int[][] schedule) {
+		for(int i = 0; i < schedule.length; i++) {
+			System.out.print("Course Code: " + schedule[i][0] + " ");
+			System.out.print("Duration: " + schedule[i][1] + " ");
+			System.out.print("Priority: " + schedule[i][2] + " ");
+			System.out.print("Arrival Time: " + schedule[i][3]);
+			System.out.println();
+		}
+		System.out.printf("Total average waiting time is: %.2f \n\n" , wait);
 	}
-
 }
