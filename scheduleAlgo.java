@@ -7,6 +7,7 @@ public class scheduleAlgo {
 				{2201, 3, 2, 1},
 				{3401, 2, 3, 2},
 				{1103, 1, 1, 3},
+				{2402, 2, 4, 0}
 		};
 		// schedule array structure : course code, duration, priority, arrival time
 		
@@ -14,23 +15,44 @@ public class scheduleAlgo {
 		double turnAround;
 
 		fcfs(schedule); //algorithm call
-		wait = waiting(schedule); //waiting time for fcfs
+		wait = calcWT(schedule); //waiting time for fcfs
+		turnAround = calcTAT(schedule);
 		System.out.println("FCFS Algorithm Output:");
-		DisplayAlgo(wait,schedule); //printing FCFS output
+		DisplayAlgo(wait,turnAround,schedule); //printing FCFS output
 		
 		prioritySched(schedule); //algorithm call
-		wait = waiting(schedule); //waiting time for ps
+		wait = calcWT(schedule); //waiting time for ps
+		turnAround = calcTAT(schedule); // turnaround time
 		System.out.println("Priority Scheduling Output:");
-		DisplayAlgo(wait,schedule); //printing PriorityScheduling output
+		DisplayAlgo(wait,turnAround,schedule); //printing PriorityScheduling output
 		
 		
 	}
 	
-	private static double waiting(int[][] schedule) {
+	private static double calcTAT(int[][] schedule) {
+		// average turnaround time calculation
+		double total = 0.0, finish = 0.0;
+		for(int i = 0; i < schedule.length; i++) {
+			if(i==0) {
+				finish += (schedule[i][1] + schedule[i][3]);
+			} else {
+				finish += schedule[i][1];
+			}
+			total += (finish - schedule[i][3]);
+		}
+		return total/schedule.length;
+	}
+
+	private static double calcWT(int[][] schedule) {
 		// average waiting time calculation
-		double total = 0.0;
-		for(int i = 1; i < schedule.length; i++) {
-			total += schedule[i][3];
+		double total = 0.0, start = 0.0;
+		for(int i = 0; i < schedule.length; i++) {
+			if(i==0) {
+				start += schedule[i][3];
+			} else {
+				start += schedule[i-1][1];
+			}
+			total += (start-schedule[i][3]);
 		}
 		return total/schedule.length;
 	}
@@ -64,7 +86,7 @@ public class scheduleAlgo {
 			}
 		}
 	}
-	private static void DisplayAlgo(double wait, int[][] schedule) {
+	private static void DisplayAlgo(double wait, double turnAround, int[][] schedule) {
 		for(int i = 0; i < schedule.length; i++) {
 			System.out.print("Course Code: " + schedule[i][0] + " ");
 			System.out.print("Duration: " + schedule[i][1] + " ");
@@ -72,6 +94,8 @@ public class scheduleAlgo {
 			System.out.print("Arrival Time: " + schedule[i][3]);
 			System.out.println();
 		}
-		System.out.printf("Total average waiting time is: %.2f \n\n" , wait);
+		System.out.printf("Total average Waiting Time is: %.2f \n" , wait);
+		System.out.printf("Total average TurnAround Time is: %.2f \n\n" , turnAround);
+
 	}
 }
