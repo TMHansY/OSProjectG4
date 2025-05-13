@@ -6,8 +6,7 @@ public class scheduleAlgo {
 		int[][] schedule = {
 				{2201, 3, 2, 1},
 				{3401, 2, 3, 2},
-				{1103, 1, 1, 3},
-				{2402, 2, 4, 0}
+				{1103, 1, 1, 3}
 		};
 		// schedule array structure : course code, duration, priority, arrival time
 		
