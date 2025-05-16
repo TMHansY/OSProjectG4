@@ -74,10 +74,28 @@ public class scheduleAlgo {
 	private static void prioritySched(int[][] schedule) {
 		// Priority Scheduling Algorithm
 		int[] temp;
+		int time = 0;
 		
-		for(int i = 0; i < 5; i++) {
+		//start
+		for(int i = 0; i < schedule.length; i++) {
 			for(int j = 0; j< schedule.length - 1 ; j++) {
-				if(schedule[j][2]>schedule[j+1][2]) {
+				if(schedule[j][3]>schedule[j+1][3] && schedule[j][2] < schedule[j+1][2]) { //if priority j < j+1 and arrival time j > j+1
+					temp = schedule[j];
+					schedule[j] = schedule[j+1];
+					schedule[j+1] = temp;
+				}
+				else if(schedule[j][3]>schedule[j+1][3]){
+					temp = schedule[j];
+					schedule[j] = schedule[j+1];
+					schedule[j+1] = temp;
+				}
+			}
+		}
+		time += schedule[0][1];
+		//continue after start
+		for(int i = 1; i < schedule.length; i++) {
+			for(int j = 1; j< schedule.length - 1 ; j++) {
+				if(schedule[j][2] < schedule[j+1][2] && schedule[j][3] <= time ) { 
 					temp = schedule[j];
 					schedule[j] = schedule[j+1];
 					schedule[j+1] = temp;
